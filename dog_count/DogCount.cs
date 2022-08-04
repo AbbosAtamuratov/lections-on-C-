@@ -18,12 +18,12 @@ while ( dist>5 )
     if ( buddy == 1)
     {
         time = dist / (v1+vDog);
-        buddy = 1;
+        buddy = 2;
     }
     else
     {
         time = dist / (v2+vDog);
-        buddy = 2;
+        buddy = 1;
     }
     dist = dist - ((v1+v2)*time);
     count++ ;
