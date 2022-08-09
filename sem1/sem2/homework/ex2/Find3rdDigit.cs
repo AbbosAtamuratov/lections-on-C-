@@ -11,14 +11,23 @@ bool isItBigEnough(string a)
     return a.Length > 2;
 }
 
-char thirdDigit (string word)
+int niceTrim(string word, int a)
 {
     int size = word.Length;
-    char res = '1';
-    int diff = size-3;
-    res = Convert.ToChar(word.Substring(word.Length-diff));
+    int res = Convert.ToInt32(word);
+    while (size > a)
+    {
+        res /= 10;
+        size--;
+    }
     return res;
-} 
-
-string input = ReadStr("Введите число: ");
-Console.Write(thirdDigit(input));
+}
+string input = ReadStr("Введите число больше 99: ");
+if(isItBigEnough(input) == true)
+{
+    Console.Write("Третья цифра: " + niceTrim(input, 3) % 10);
+}
+else
+{
+    Console.Write("Третьей цифры нет!");
+}
