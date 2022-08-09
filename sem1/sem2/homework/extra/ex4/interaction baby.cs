@@ -91,7 +91,7 @@ while (input != "exit")
         {
             switch (input)
             {
-                case "stratGG":
+                case "startGG":
                     bool result = runGuessingGame();
                     if (result == true)
                     {
@@ -109,7 +109,7 @@ while (input != "exit")
                 case "refresh":
                     losses = 0;
                     wins = 0;
-                    Console.Write("Компьютер - " + losses + " : " + wins + " - Вы");
+                    Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
                     input = ReadStr("Введите команду: ");
                     break;
                 case "exit":
