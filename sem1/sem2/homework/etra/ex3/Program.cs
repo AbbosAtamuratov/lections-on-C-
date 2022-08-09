@@ -9,7 +9,6 @@ int ReadInt(string message)
 
 int GetRandomNumber(int a)
 {
-    a = ReadInt("Введите число, и программа загадает новое число от 0 до вашего: ");
     int res = new Random().Next(0, a);
     return res;
 }
@@ -26,7 +25,7 @@ void Hint(int a, int b)
     }
 }
 
-int firstInput = 0;
+int firstInput = ReadInt("Введите число, и программа загадает новое число от 0 до вашего: ");
 int randomNumber = GetRandomNumber(firstInput);
 int tries = 3;
 int input = ReadInt("Угадайте число. У вас " + tries + " попыток: ");
