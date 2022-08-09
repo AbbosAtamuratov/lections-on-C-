@@ -103,7 +103,7 @@ while (input != "exit")
                     }
                     break;
                 case "score":
-                    Console.Write("Компьютер - " + losses + " : " + wins + " - Вы");
+                    Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
                     input = ReadStr("Введите команду: ");
                     break;
                 case "refresh":
@@ -116,8 +116,8 @@ while (input != "exit")
                     Console.Write("Завершение работы.");
                     break;
                 default:
-                    Console.Write("Команда не опознана. Завершение работы.");
-                    input = "exit";
+                    Console.Write("Команда не опознана. ");
+                    input = ReadStr("Введите команду: ");
                     break;
             }
 
