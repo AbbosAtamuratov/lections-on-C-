@@ -47,11 +47,11 @@ bool runGuessingGame()
     int firstInput = ReadInt("Введите число, и программа загадает новое число от 0 до вашего: ");
     int randomNumber = GetRandomNumber(firstInput);
     int tries = 2;
-    int input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
+    int input = ReadInt("Угадайте число. У вас " + (tries + 1) + " попыток: ");
     // проверка Console.WriteLine(randomNumber); 
     while (tries > 0)
     {
-        if (tries == 0) 
+        if (tries == 0)
         {
             break;
         }
@@ -59,7 +59,7 @@ bool runGuessingGame()
         {
             tries--;
             Hint(input, randomNumber);
-            input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
+            input = ReadInt("Угадайте число. У вас " + (tries + 1) + " попыток: ");
         }
         else
         {
@@ -86,46 +86,43 @@ string input = ReadStr("Введите команду или help: ");
 
 while (input != "exit")
 {
-    if (input == "help")
-    {
-        input = cryForHelp();
-    }
-    else
-    {
-        {
-            switch (input)
-            {
-                case "startGG":
-                    bool result = runGuessingGame();
-                    if (result == true)
-                    {
-                        wins++;
-                    }
-                    else
-                    {
-                        losses++;
-                    }
-                    input = ReadStr("Введите команду: ");
-                    break;
-                case "score":
-                    Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
-                    input = ReadStr("Введите команду: ");
-                    break;
-                case "refresh":
-                    losses = 0;
-                    wins = 0;
-                    Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
-                    input = ReadStr("Введите команду: ");
-                    break;
-                case "exit":
-                    Console.Write("Завершение работы.");
-                    break;
-                default:
-                    Console.Write("Команда не опознана. ");
-                    input = ReadStr("Введите команду: ");
-                    break;
-            }
 
+    {
+        switch (input)
+        {
+            case "help":
+                input = cryForHelp();
+                break;
+            case "startGG":
+                bool result = runGuessingGame();
+                if (result == true)
+                {
+                    wins++;
+                }
+                else
+                {
+                    losses++;
+                }
+                input = ReadStr("Введите команду: ");
+                break;
+            case "score":
+                Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
+                input = ReadStr("Введите команду: ");
+                break;
+            case "refresh":
+                losses = 0;
+                wins = 0;
+                Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
+                input = ReadStr("Введите команду: ");
+                break;
+            case "exit":
+                Console.Write("Завершение работы.");
+                break;
+            default:
+                Console.Write("Команда не опознана. ");
+                input = ReadStr("Введите команду: ");
+                break;
         }
+
     }
 }
