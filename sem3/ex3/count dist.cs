@@ -29,3 +29,5 @@ int yLength = CheckLength(y1, y2);
 double result = dXdY(xLength, yLength);
 
 Console.WriteLine("Расстояние между вашими точками: " + result);
+
+//инерполяция Console.WriteLine($"A({x1}, {y1}); B({x2}, {y2}) -> {distance}");
