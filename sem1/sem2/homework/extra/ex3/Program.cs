@@ -27,8 +27,8 @@ void Hint(int a, int b)
 
 int firstInput = ReadInt("Введите число, и программа загадает новое число от 0 до вашего: ");
 int randomNumber = GetRandomNumber(firstInput);
-int tries = 3;
-int input = ReadInt("Угадайте число. У вас " + tries + " попыток: ");
+int tries = 2;
+int input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
 // проверка Console.WriteLine(randomNumber); 
 while (tries > 0)
 {
@@ -36,7 +36,7 @@ while (tries > 0)
     {
         tries--;
         Hint(input, randomNumber);
-        input = ReadInt("Угадайте число. У вас " + tries + " попыток: ");
+        input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
     }
     else
     {

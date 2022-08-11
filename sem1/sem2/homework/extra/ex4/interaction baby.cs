@@ -12,15 +12,15 @@ string ReadStr(string message)
     return Console.ReadLine();
 }
 
-void cryForHelp()
+string cryForHelp()
 {
     Console.Clear();
     Console.WriteLine("Доступные команды: ");
     Console.WriteLine("exit - выход из программы");
     Console.WriteLine("startGG - сыграть угадайку ");
-    Console.WriteLine("Score - счёт");
+    Console.WriteLine("score - счёт");
     Console.WriteLine("refresh - стереть счёт");
-    Console.WriteLine("Введите команду или help: ");
+    return ReadStr("Введите команду или help: ");
 }
 
 int GetRandomNumber(int a)
@@ -46,16 +46,20 @@ bool runGuessingGame()
     bool res = true;
     int firstInput = ReadInt("Введите число, и программа загадает новое число от 0 до вашего: ");
     int randomNumber = GetRandomNumber(firstInput);
-    int tries = 3;
-    int input = ReadInt("Угадайте число. У вас " + tries + " попыток: ");
+    int tries = 2;
+    int input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
     // проверка Console.WriteLine(randomNumber); 
     while (tries > 0)
     {
+        if (tries == 0) 
+        {
+            break;
+        }
         if (input != randomNumber)
         {
             tries--;
             Hint(input, randomNumber);
-            input = ReadInt("Угадайте число. У вас " + tries + " попыток: ");
+            input = ReadInt("Угадайте число. У вас " + (tries+1) + " попыток: ");
         }
         else
         {
@@ -84,7 +88,7 @@ while (input != "exit")
 {
     if (input == "help")
     {
-        cryForHelp();
+        input = cryForHelp();
     }
     else
     {
@@ -101,6 +105,7 @@ while (input != "exit")
                     {
                         losses++;
                     }
+                    input = ReadStr("Введите команду: ");
                     break;
                 case "score":
                     Console.WriteLine("Компьютер - " + losses + " : " + wins + " - Вы");
