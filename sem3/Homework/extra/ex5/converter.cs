@@ -69,3 +69,4 @@ double cash = ReadDbl("Введите ваш баланс: ");
 double[] converted = ReadTGK (cash);
 showALL(currensy);
 showMY(converted); 
+//fixing push
