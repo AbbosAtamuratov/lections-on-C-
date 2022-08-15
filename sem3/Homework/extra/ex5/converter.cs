@@ -3,7 +3,7 @@
 // Курс конвертации просто описать в программе. 
 // Программа заканчивает свою работу в тот момент, когда решит пользователь.
 
-double ReadDbl(string message)
+double ReadDouble(string message)
 {
     Console.Write(message);
     return Convert.ToDouble(Console.ReadLine());
@@ -16,10 +16,41 @@ string ReadStr (string message)
 }
 
 string[] currensy = new string[] { "Алтын", "Гульден", "Тугрик" }; // валюты
-string[] CRR = new string[] {"ATN", "GDN", "TGK"}; //сокращённые названия
+string[] ShortCurrency = new string[] {"ATN", "GDN", "TGK"}; //сокращённые названия
 // обменный курс 1 алтын = 0,5 гульденов = 10 тугриков
 // 1 гульден = 2 алтына = 20 тугриков
 // 1 тугрик = 0,1 алтын = 0,05 гульденов
+
+double[] ExchangeRate (string input, string[] curr)
+{
+    double balance = 0;
+    double[] res = new double[3];
+    switch(input)
+    {
+        case "readATN":
+            balance = ReadDouble($"Веведите сумму в {curr[0]}ах: ");
+            res[0] = balance;
+            res[1] = balance * 0.5;
+            res[2] = balance * 10;  
+            break;
+        case "ReadGDN":
+            balance = ReadDouble($"Веведите сумму в {curr[1]}ах: ");
+            res[0] = balance * 2;
+            res[1] = balance;
+            res[2] = balance * 20;
+            break;
+        case "ReadTGK":  
+            balance = ReadDouble($"Веведите сумму в {curr[2]}ах: ");
+            res[0] = balance / 10;
+            res[1] = balance * 0.05;
+            res[2] = balance;
+            break;
+        default:
+            Console.WriteLine("Некорректный ввод, баланс обнулён");
+            break;     
+    }
+    return res;
+}
 
 void showMY(double[] array)
 {
@@ -43,33 +74,6 @@ void Info(string[] currency)
     Console.WriteLine ($"TGKtoATN - переводит ваш сумму из {currency[2]}ов в {currency[0]}ы.");
     Console.WriteLine ($"TGKtoGDN - переводит ваш сумму из {currency[2]}ов в {currency[1]}ы.");
     Console.WriteLine("exit - завершает работу.");
-}
-
-double[] ReadATN(double balance)
-{
-    double[] res = new double[3];
-    res[0] = balance;
-    res[1] = balance * 0.5;
-    res[2] = balance * 10;
-    return res;
-}
-
-double[] ReadGDN(double balance)
-{
-    double[] res = new double[3];
-    res[0] = balance * 2;
-    res[1] = balance;
-    res[2] = balance * 20;
-    return res;
-}
-
-double[] ReadTGK(double balance)
-{
-    double[] res = new double[3];
-    res[0] = balance / 10;
-    res[1] = balance * 0.05;
-    res[2] = balance;
-    return res;
 }
 
 void showALL (string[] curr)
@@ -143,7 +147,7 @@ TGKtoGDN(CRR, converted);
 */
 bool atWork = true;
 string input = "";
-double[] myMoney = ReadATN(0); 
+double[] myMoney = new double[3]; 
 while (atWork)
 {
     input = ReadStr("Введите команду или info: ");
@@ -159,31 +163,31 @@ while (atWork)
             showMY(myMoney);
             break;
         case "readATN":
-            myMoney = ReadATN(ReadDbl($"Веведите сумму в {currensy[0]}ах: "));
+            myMoney = ExchangeRate(input, currensy);
             break;
         case "readGDN":
-            myMoney = ReadGDN(ReadDbl($"Веведите сумму в {currensy[1]}ах: "));
+            myMoney = ExchangeRate(input, currensy);
             break;
         case "readTGK":
-            myMoney = ReadTGK(ReadDbl($"Веведите сумму в {currensy[2]}ах: "));
+            myMoney = ExchangeRate(input, currensy);
             break;
         case "ATNtoGDN":
-            ATNtoGDN(CRR, myMoney);
+            ATNtoGDN(ShortCurrency, myMoney);
             break;
         case "ATNtoTGK":
-            ATNtoTGK(CRR, myMoney);
+            ATNtoTGK(ShortCurrency, myMoney);
             break;
         case "GDNtoATN":
-            GDNtoATN(CRR, myMoney);
+            GDNtoATN(ShortCurrency, myMoney);
             break;
         case "GDNtoTGK":
-            GDNtoTGK(CRR, myMoney);
+            GDNtoTGK(ShortCurrency, myMoney);
             break;
         case "TGKtoATN":
-            TGKtoATN(CRR, myMoney);
+            TGKtoATN(ShortCurrency, myMoney);
             break;
         case "TGKtoGDN":
-            TGKtoGDN(CRR, myMoney);
+            TGKtoGDN(ShortCurrency, myMoney);
             break;
         case "exit":
             atWork = false;
