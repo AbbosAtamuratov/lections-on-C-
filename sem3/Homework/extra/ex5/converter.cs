@@ -52,7 +52,7 @@ double[] ExchangeRate (string input, string[] curr)
     return res;
 }
 
-void showMY(double[] array)
+void ShowMY(double[] array)
 {
     Console.WriteLine ("");
     Console.WriteLine($"Ваш баланс: {array[0]} ATN это {array[1]} GDN или {array[2]} TGK");
@@ -76,7 +76,7 @@ void Info(string[] currency)
     Console.WriteLine("exit - завершает работу.");
 }
 
-void showALL (string[] curr)
+void ShowALL (string[] curr)
 {
     Console.WriteLine ("");
     Console.WriteLine ("Вам доступны следующие валюты: ");
@@ -132,19 +132,7 @@ void TGKtoGDN (string[] curr, double[] ballance)
 }
 
 Console.Clear();
-/* проверка и отладка команд
-Info(currensy);
-showALL(currensy);
-double cash = ReadDbl("Введите ваш баланс: ");
-double[] converted = ReadTGK (cash);
-showMY(converted); 
-ATNtoGDN(CRR, converted);
-ATNtoTGK(CRR, converted);
-GDNtoATN(CRR, converted);
-GDNtoTGK(CRR, converted);
-TGKtoATN(CRR, converted);
-TGKtoGDN(CRR, converted);
-*/
+
 bool atWork = true;
 string input = "";
 double[] myMoney = new double[3]; 
@@ -157,10 +145,10 @@ while (atWork)
             Info(currensy);
             break;
         case "showALL":
-            showALL(currensy);
+            ShowALL(currensy);
             break;
         case "showMY":
-            showMY(myMoney);
+            ShowMY(myMoney);
             break;
         case "readATN":
             myMoney = ExchangeRate(input, currensy);
