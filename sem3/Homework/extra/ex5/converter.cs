@@ -24,7 +24,7 @@ string[] ShortCurrency = new string[] { "ATN", "GDN", "TGK" }; //сокращё�
 double[] ExchangeRate(string input, string[] curr)
 {
     double balance = 0;
-    double[] res = new double[3];
+    double[] res = new double[curr.Length];
     switch (input)
     {
         case "readATN":
@@ -52,10 +52,27 @@ double[] ExchangeRate(string input, string[] curr)
     return res;
 }
 
-void ShowMY(double[] array)
+void ShowMY(double[] array, string[] shortCurr)
 {
     Console.WriteLine("");
-    Console.WriteLine($"Ваш баланс: {array[0]} ATN это {array[1]} GDN или {array[2]} TGK");
+    Console.Write ("Ваш баланс: ");
+    for (int i = 0; i<shortCurr.Length; i++)
+    {
+        Console.Write($"{array[i]} {shortCurr[i]} ");
+        switch (i)
+        {
+            case 0:
+                Console.Write ("это ");
+                break;
+            case (2):   //при увеличении количества валют, обязательно поменять на shortCurr.Length-1
+                Console.Write (" ");
+                break;
+            default:
+                Console.Write ("или ");
+                break;
+        }
+    }
+    Console.WriteLine("");
 }
 
 void Info(string[] currency)
@@ -80,7 +97,11 @@ void ShowALL(string[] curr)
 {
     Console.WriteLine("");
     Console.WriteLine("Вам доступны следующие валюты: ");
-    Console.WriteLine($"{curr[0]}, {curr[1]}, {curr[2]} ");
+    for (int i =0; i<curr.Length-1; i++) 
+    {
+        Console.Write($"{curr[i]}, ");
+    }
+    Console.WriteLine($"{curr[curr.Length-1]} ");
 }
 
 void ATNtoGDN(string[] curr, double[] ballance)
@@ -148,7 +169,7 @@ while (atWork)
             ShowALL(currensy);
             break;
         case "showMY":
-            ShowMY(myMoney);
+            ShowMY(myMoney, ShortCurrency);
             break;
         case "readATN":
             myMoney = ExchangeRate(input, currensy);
