@@ -48,17 +48,13 @@ int[] CutOutOfArray(int[] A)
     int target = ReadInt("Введите значение элемента, которое надо удалить: ");
     int castawayIndex = FindTargetIndex(A, target);
     int[] result = new int[A.Length - 1];
-    for (int i = 0; i < result.Length; i++)
+    int i = 0; 
+    while (i<castawayIndex)
     {
-        if (i == castawayIndex)
-        {
-            result[i] = A[i+1];
-        }
-        else
-        {
-            result[i] = A[i];
-        }
+        result[i] = A[i];
+        i++;
     }
+    for (int j = castawayIndex; j<result.Length; j++) result[j] = A[j+1];
     return result;
 }
 
