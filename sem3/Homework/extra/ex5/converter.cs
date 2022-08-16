@@ -64,7 +64,7 @@ void ShowMY(double[] array, string[] shortCurr)
             case 0:
                 Console.Write ("это ");
                 break;
-            case (2):   //при увеличении количества валют, обязательно поменять на shortCurr.Length-1
+            case (2):   //при увеличении количества валют, обязательно поменять на shortCurr.Length-1 
                 Console.Write (" ");
                 break;
             default:
