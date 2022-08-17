@@ -10,7 +10,8 @@ int ReadInt(string message)
 
 void PrintArray(int[] a)
 {
-    for (int i = 0; i < a.Length; i++) Console.Write(a[i] + " ");
+    for (int i = 0; i < a.Length; i++) 
+                Console.Write(a[i] + " ");
     Console.WriteLine("");
 }
 
@@ -21,40 +22,34 @@ int[] CreateArray(int size)
     return a;
 }
 
-int[] AddToArray(int[] A)
+int[] AddToArray(int[] a)
 {
-    int modifier = ReadInt("Введите значение, на которое вы хотите увеличить массив: ");
-    int[] result = new int[A.Length + modifier];
-    for (int i = 0; i < A.Length; i++) result[i] = A[i];
-    for (int j = A.Length; j < A.Length + modifier; j++)
+    int[] result = new int[a.Length + 1];
+    for (int i = 0; i < a.Length; i++) result[i] = a[i];
+    for (int j = a.Length; j < a.Length + 1; j++)
     {
-        result[j] = ReadInt($"Введите значение нового элемента на {j + 1}й позиции: ");
+        result[j] = new Random().Next(0, 100);
     }
     return result;
 }
 
-int FindTargetIndex(int[] B, int target)
+int FindTargetIndex(int[] b, int target)
 {
     int i=0;
-    while (B[i] != target && i < B.Length)
+    while (b[i] != target && i < b.Length)
     {
         i++;
     }
     return i;
 }
 
-int[] CutOutOfArray(int[] A)
+int[] CutOutOfArray(int[] a)
 {
     int target = ReadInt("Введите значение элемента, которое надо удалить: ");
-    int castawayIndex = FindTargetIndex(A, target);
-    int[] result = new int[A.Length - 1];
-    int i = 0; 
-    while (i<castawayIndex)
-    {
-        result[i] = A[i];
-        i++;
-    }
-    for (int j = castawayIndex; j<result.Length; j++) result[j] = A[j+1];
+    int castawayIndex = FindTargetIndex(a, target);
+    int[] result = new int[a.Length - 1];
+    for (int i = 0; i<castawayIndex; i++) result[i] = a[i];
+    for (int j = castawayIndex; j<result.Length; j++) result[j] = a[j+1];
     return result;
 }
 
@@ -64,3 +59,9 @@ PrintArray(array);
 int[] expanded = AddToArray(array); 
 PrintArray(expanded);
 PrintArray(CutOutOfArray(expanded));
+
+
+// 1. for (int i = 0; i < a.Length; i++) Console.Write(a[i] + " "); - до одной строки не сокращаем
+// 2. AddToArray(int[] A) - параметры принято с маленькой буквы писать
+// 3. AddToArray - выполняет больше, чем задумано. Во-первых, метод должен добавлять одно значение в конец массива. А во-вторых, в ее ответственность не должны входить запросы от пользователя
+// 4. CutOutOfArray - то же, что и с AddToArray. Еще почему использован while, а не for?
