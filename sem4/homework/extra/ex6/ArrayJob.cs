@@ -59,9 +59,3 @@ PrintArray(array);
 int[] expanded = AddToArray(array); 
 PrintArray(expanded);
 PrintArray(CutOutOfArray(expanded));
-
-
-// 1. for (int i = 0; i < a.Length; i++) Console.Write(a[i] + " "); - до одной строки не сокращаем
-// 2. AddToArray(int[] A) - параметры принято с маленькой буквы писать
-// 3. AddToArray - выполняет больше, чем задумано. Во-первых, метод должен добавлять одно значение в конец массива. А во-вторых, в ее ответственность не должны входить запросы от пользователя
-// 4. CutOutOfArray - то же, что и с AddToArray. Еще почему использован while, а не for?
