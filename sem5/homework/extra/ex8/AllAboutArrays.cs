@@ -149,28 +149,17 @@ void CommandList()
     Console.WriteLine("GenerateArray – запоминает числа, введённые через пробел, как массив");
     Console.WriteLine("AddNumbers – добавляет числа, введённые через пробел, к уже существующему массиву");
     Console.WriteLine("RemoveNumbers – числа, введённые через пробел, удаляются из уже существующего массива, если такие есть");
-    /**/
     Console.WriteLine("Numbers – печатает текущий массив");
-    /**/
     Console.WriteLine("Shuffle – случайным образом перемешивает элементы текущего массива");
-    /**/
     Console.WriteLine("Sum – суммирует элементы текущего массива");
-    /**/
     Console.WriteLine("SumEven – суммирует чётные элементы текущего массива");
-    /**/
     Console.WriteLine("SumUneven – суммирует нечётные элементы текущего массива");
-    /**/
     Console.WriteLine("Reverse – разворачивает текущий массив");
     Console.WriteLine("SortAscend – сортирует текущий массив по возрастанию");
     Console.WriteLine("SortDecend – сортирует текущий массив по убыванию");
-    /**/
     Console.WriteLine("Mirror – меняет знак элементов текущего массива");
-    /**/
     Console.WriteLine("MinMax – находит разницу между максимальным и минмальным элементами текущего массива");
-    /**/
     Console.WriteLine("MinMaxDistance – находит расстояние между максимальным и минмальным элементами текущего массива");
-    /**/
     Console.WriteLine("Average – среднее арифметическое элементов текущего массива");
-    /**/
     Console.WriteLine("Exit – завершает работу программы\n");
 }
