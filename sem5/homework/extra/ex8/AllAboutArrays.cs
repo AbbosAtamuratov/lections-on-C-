@@ -7,29 +7,29 @@
 // Список команд можно дополнить по своему желанию. Все они должны быть направлены на работу с числовым массивом.
 
 Console.Clear();
-int [] numbers = GenerateArray("Введите элементы массива через пробел: ");
-PrintArray(numbers);
-int[] extended = AddNumbers(numbers);
-PrintArray(extended);
+int [] range = SetNumbers("Введите элементы массива через пробел: ");
+Numbers(range);
+int[] extended = AddNumbers(range);
+Numbers(extended);
 Sum(extended);
 SortAscend(extended);
 Console.WriteLine("Cортирую по возрастанию... ");
-PrintArray(extended);
+Numbers(extended);
 MinMax(extended);
 Console.WriteLine("Встряхнём содержимое... ");
 Shuffle(extended);
-PrintArray(extended);
+Numbers(extended);
 MinMaxDistance(extended);
 Console.WriteLine("Cортирую по убыванию... ");
 SortDecend(extended);
 SumEvenPos(extended);
 Console.WriteLine("Встряхнём содержимое... ");
 Shuffle(extended);
-PrintArray(extended);
+Numbers(extended);
 SumUnevenPos(extended);
 Console.WriteLine("Разворачиваю массив... ");
 Reverse(extended);
-PrintArray(extended);
+Numbers(extended);
 Average(extended);
 
 
@@ -44,7 +44,7 @@ int CountSpaces(string input)
     return counter;
 }
 
-int[] GenerateArray(string message)
+int[] SetNumbers(string message)
 {
     Console.Write(message);
     string input = Console.ReadLine() + " ";
@@ -67,7 +67,7 @@ int[] GenerateArray(string message)
 
 int[] AddNumbers(int[] array1)
 {
-    int[] candidates = GenerateArray("Введите числа, которые вы хотите добавить, через пробел: ");
+    int[] candidates = SetNumbers("Введите числа, которые вы хотите добавить, через пробел: ");
     int[] result = new int[array1.Length + candidates.Length];
     for (int i = 0; i < array1.Length; i++)
         result[i] = array1[i];
@@ -78,13 +78,13 @@ int[] AddNumbers(int[] array1)
 
 int[] RemoveNumbers(int[] array1)
 {
-    int[] candidates = GenerateArray("Введите числа, которые вы хотите убрать, через пробел: ");
+    int[] candidates = SetNumbers("Введите числа, которые вы хотите убрать, через пробел: ");
     int[] result = new int[array1.Length-candidates.Length];
-    
+
     return result;
 }
 
-void PrintArray(int[] array1)
+void Numbers(int[] array1)
 {
     Console.Write("Ваш массив: ");
     for (int i = 0; i < array1.Length; i++)
