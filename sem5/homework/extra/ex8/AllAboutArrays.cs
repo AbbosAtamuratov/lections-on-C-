@@ -6,10 +6,11 @@
 // - Sum – найдется сумма всех элементов чисел
 // Список команд можно дополнить по своему желанию. Все они должны быть направлены на работу с числовым массивом.
 
-// int[] array = ReadIntArray("Введите элементы массива через пробел: ");
-// PrintArray(array);
+int[] array = ReadIntArray("Введите элементы массива через пробел: ");
+PrintArray(array);
 
-string test = ReadStr("Введите строку: ");
+//string test = ReadStr("Введите строку: ");
+
 
 /*-------------------------------------------------------------------*/
 string ReadStr(string message)
@@ -30,21 +31,21 @@ int CountSpaces(string input)
 int[] ReadIntArray(string message)
 {
     Console.Write(message);
-    string input = Console.ReadLine();
-    int[] result = new int[CountSpaces(input) + 1];
+    string input = Console.ReadLine()+" ";
+    int[] result = new int[CountSpaces(input)];
     int cursor = 0;
-    string temp = "";
-    int resultIndex = 0;
+    int digitLen = 0;
+    int number = 0;
+    int ires=0;
     for (int i = 0; i < input.Length; i++)
-    {
         if (input[i] == ' ')
         {
-            temp = input.Substring(cursor, i - cursor);
-            result[resultIndex] = Convert.ToInt32(temp);
+            digitLen = i - cursor;
+            number = Convert.ToInt32(input.Substring(cursor, digitLen));
             cursor = i;
-            resultIndex++;
+            result[ires] = number;
+            ires++;
         }
-    }
     return result;
 }
 
