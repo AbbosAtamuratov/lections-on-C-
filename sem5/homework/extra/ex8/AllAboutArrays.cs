@@ -6,18 +6,34 @@
 // - Sum – найдется сумма всех элементов чисел
 // Список команд можно дополнить по своему желанию. Все они должны быть направлены на работу с числовым массивом.
 
-int[] array = ReadIntArray("Введите элементы массива через пробел: ");
-PrintArray(array);
-
-//string test = ReadStr("Введите строку: ");
+Console.Clear();
+int [] numbers = GenerateArray("Введите элементы массива через пробел: ");
+PrintArray(numbers);
+int[] extended = AddNumbers(numbers);
+PrintArray(extended);
+Sum(extended);
+SortAscend(extended);
+Console.WriteLine("Cортирую по возрастанию... ");
+PrintArray(extended);
+MinMax(extended);
+Console.WriteLine("Встряхнём содержимое... ");
+Shuffle(extended);
+PrintArray(extended);
+MinMaxDistance(extended);
+Console.WriteLine("Cортирую по убыванию... ");
+SortDecend(extended);
+SumEvenPos(extended);
+Console.WriteLine("Встряхнём содержимое... ");
+Shuffle(extended);
+PrintArray(extended);
+SumUnevenPos(extended);
+Console.WriteLine("Разворачиваю массив... ");
+Reverse(extended);
+PrintArray(extended);
+Average(extended);
 
 
 /*-------------------------------------------------------------------*/
-string ReadStr(string message)
-{
-    Console.Write(message);
-    return Console.ReadLine();
-}
 
 int CountSpaces(string input)
 {
@@ -28,15 +44,15 @@ int CountSpaces(string input)
     return counter;
 }
 
-int[] ReadIntArray(string message)
+int[] GenerateArray(string message)
 {
     Console.Write(message);
-    string input = Console.ReadLine()+" ";
+    string input = Console.ReadLine() + " ";
     int[] result = new int[CountSpaces(input)];
     int cursor = 0;
     int digitLen = 0;
     int number = 0;
-    int ires=0;
+    int ires = 0;
     for (int i = 0; i < input.Length; i++)
         if (input[i] == ' ')
         {
@@ -46,6 +62,25 @@ int[] ReadIntArray(string message)
             result[ires] = number;
             ires++;
         }
+    return result;
+}
+
+int[] AddNumbers(int[] array1)
+{
+    int[] candidates = GenerateArray("Введите числа, которые вы хотите добавить, через пробел: ");
+    int[] result = new int[array1.Length + candidates.Length];
+    for (int i = 0; i < array1.Length; i++)
+        result[i] = array1[i];
+    for (int j = array1.Length; j < array1.Length + candidates.Length; j++)
+        result[j] = candidates[j - array1.Length];
+    return result;
+}
+
+int[] RemoveNumbers(int[] array1)
+{
+    int[] candidates = GenerateArray("Введите числа, которые вы хотите убрать, через пробел: ");
+    int[] result = new int[array1.Length-candidates.Length];
+    
     return result;
 }
 
@@ -73,12 +108,37 @@ void Shuffle(int[] array1)
 void Reverse(int[] array1)
 {
     int temp = 0;
-    for (int i = 0; i < array1.Length; i++)
+    for (int i = 0; i < array1.Length/2; i++)
     {
         temp = array1[i];
         array1[i] = array1[array1.Length - 1 - i];
         array1[array1.Length - 1 - i] = temp;
     }
+}
+
+void SortAscend(int[] array1)
+{
+    for (int i = 0; i < array1.Length - 1; i++)
+    {
+        int minPosition = i;
+        for (int j = i + 1; j < array1.Length; j++)
+        {
+            if (array1[j] < array1[minPosition])
+            {
+                minPosition = j;
+            }
+        }
+        int temporary = array1[i];
+        array1[i] = array1[minPosition];
+        array1[minPosition] = temporary;
+    }
+
+}
+
+void SortDecend(int[] array1)
+{
+    SortAscend(array1);
+    Reverse(array1);
 }
 
 void Sum(int[] array1)
@@ -89,20 +149,20 @@ void Sum(int[] array1)
     Console.WriteLine($"Сумма всех элементов равна: {result}.");
 }
 
-void SumUneven(int[] array1)
+void SumUnevenPos(int[] array1)
 {
     int result = 0;
     for (int i = 0; i < array1.Length; i += 2)
         result += array1[i];
-    Console.WriteLine($"Сумма всех нечётных элементов равна: {result}.");
+    Console.WriteLine($"Сумма всех элементов на нечётных позициях равна: {result}.");
 }
 
-void SumEven(int[] array1)
+void SumEvenPos(int[] array1)
 {
     int result = 0;
     for (int i = 1; i < array1.Length; i += 2)
         result += array1[i];
-    Console.WriteLine($"Сумма всех чётных элементов равна: {result}.");
+    Console.WriteLine($"Сумма всех элементов на чётных позициях равна: {result}.");
 }
 
 void Average(int[] array1)
@@ -137,30 +197,26 @@ void MinMaxDistance(int[] array1)
     int imax = 0;
     for (int i = 0; i < array1.Length; i++)
     {
-        if (array1[i] > max) imax = i;
-        if (array1[i] < min) imin = i;
+        if (array1[i] > max)
+        {
+            imax = i;
+            max = array1[i];
+        }
+        if (array1[i] < min)
+        {
+            imin = i;
+            min = array1[i];
+        }
     }
-    result = imax - imin;
-    Console.WriteLine($"Максимальое значение в массиве находится на расстоянии в {result} элементов от минимального.");
-}
 
-void CommandList()
-{
-    Console.WriteLine("Список команд:");
-    Console.WriteLine("GenerateArray – запоминает числа, введённые через пробел, как массив");
-    Console.WriteLine("AddNumbers – добавляет числа, введённые через пробел, к уже существующему массиву");
-    Console.WriteLine("RemoveNumbers – числа, введённые через пробел, удаляются из уже существующего массива, если такие есть");
-    Console.WriteLine("Numbers – печатает текущий массив");
-    Console.WriteLine("Shuffle – случайным образом перемешивает элементы текущего массива");
-    Console.WriteLine("Sum – суммирует элементы текущего массива");
-    Console.WriteLine("SumEven – суммирует чётные элементы текущего массива");
-    Console.WriteLine("SumUneven – суммирует нечётные элементы текущего массива");
-    Console.WriteLine("Reverse – разворачивает текущий массив");
-    Console.WriteLine("SortAscend – сортирует текущий массив по возрастанию");
-    Console.WriteLine("SortDecend – сортирует текущий массив по убыванию");
-    Console.WriteLine("Mirror – меняет знак элементов текущего массива");
-    Console.WriteLine("MinMax – находит разницу между максимальным и минмальным элементами текущего массива");
-    Console.WriteLine("MinMaxDistance – находит расстояние между максимальным и минмальным элементами текущего массива");
-    Console.WriteLine("Average – среднее арифметическое элементов текущего массива");
-    Console.WriteLine("Exit – завершает работу программы\n");
+    Console.WriteLine($"imin={imin}, imax={imax}");
+    if (imax == imin + 1 || imin == imax + 1)
+        Console.WriteLine("Максимальное и минимальное значения в массиве"
+                                                + " находятся рядом друг с другом.");
+    else
+    {
+        result = Math.Abs(imax - imin) - 1;
+        Console.WriteLine($"Между максимальным и минимальным значениями "
+                                                + $"в массиве {result} элементов.");
+    }
 }
