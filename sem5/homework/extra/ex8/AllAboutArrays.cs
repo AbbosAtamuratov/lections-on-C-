@@ -7,10 +7,11 @@
 // Список команд можно дополнить по своему желанию. Все они должны быть направлены на работу с числовым массивом.
 
 Console.Clear();
-int[] range = SetNumbers("Введите элементы массива через пробел: ");
-Numbers(range);
-int[] shortRange = RemoveNumbers(range);
-Numbers(shortRange);
+
+// int[] range = SetNumbers("Введите элементы массива через пробел: ");
+// Numbers(range);
+// int[] shortRange = RemoveNumbers(range);
+// Numbers(shortRange);
 // int[] extended = AddNumbers(range);
 // Numbers(extended);
 // Console.WriteLine($"Сумма всех элементов равна: {Sum(extended)}.");
@@ -88,6 +89,20 @@ int CountMatches(int[] array1, int num)
     return counter;
 }
 
+void CornerTarget(int[] array1, int target)
+{
+    for (int i = 0; i < array1.Length; i++)
+    {
+        if (array1[i] == target)
+        {
+            int tmp = array1[i];
+            for (int j = i; j < array1.Length - i - 1; j++)
+                array1[j] = array1[j + 1];
+            array1[array1.Length - 1] = tmp;
+        }
+    }
+}
+
 int[] RemoveNumbers(int[] array1)
 {
     int[] candidates = SetNumbers("Введите числа, которые вы хотите убрать, через пробел: ");
@@ -115,10 +130,14 @@ int[] RemoveNumbers(int[] array1)
     Numbers(matches);
     sizeDifference = Sum(matches);
     int[] result = new int[array1.Length - sizeDifference];
-    // for (int i=0; i<array1.Length;i++)
-    // {
-       
-    // }       
+    for (int i = 0; i < array1.Length; i++)
+    {
+        for (int j = 0; j < matches.Length; j++)
+            CornerTarget(array1, matches[j]);
+    }
+    Numbers(array1);
+    for (int i = 0; i < result.Length; i++)
+        result[i]=array1[i];
     return result;
 
 }
