@@ -7,30 +7,32 @@
 // Список команд можно дополнить по своему желанию. Все они должны быть направлены на работу с числовым массивом.
 
 Console.Clear();
-int [] range = SetNumbers("Введите элементы массива через пробел: ");
+int[] range = SetNumbers("Введите элементы массива через пробел: ");
 Numbers(range);
-int[] extended = AddNumbers(range);
-Numbers(extended);
-Sum(extended);
-SortAscend(extended);
-Console.WriteLine("Cортирую по возрастанию... ");
-Numbers(extended);
-MinMax(extended);
-Console.WriteLine("Встряхнём содержимое... ");
-Shuffle(extended);
-Numbers(extended);
-MinMaxDistance(extended);
-Console.WriteLine("Cортирую по убыванию... ");
-SortDecend(extended);
-SumEvenPos(extended);
-Console.WriteLine("Встряхнём содержимое... ");
-Shuffle(extended);
-Numbers(extended);
-SumUnevenPos(extended);
-Console.WriteLine("Разворачиваю массив... ");
-Reverse(extended);
-Numbers(extended);
-Average(extended);
+int[] shortRange = RemoveNumbers(range);
+Numbers(shortRange);
+// int[] extended = AddNumbers(range);
+// Numbers(extended);
+// Console.WriteLine($"Сумма всех элементов равна: {Sum(extended)}.");
+// SortAscend(extended);
+// Console.WriteLine("Cортирую по возрастанию... ");
+// Numbers(extended);
+// MinMax(extended);
+// Console.WriteLine("Встряхнём содержимое... ");
+// Shuffle(extended);
+// Numbers(extended);
+// MinMaxDistance(extended);
+// Console.WriteLine("Cортирую по убыванию... ");
+// SortDecend(extended);
+// SumEvenPos(extended);
+// Console.WriteLine("Встряхнём содержимое... ");
+// Shuffle(extended);
+// Numbers(extended);
+// SumUnevenPos(extended);
+// Console.WriteLine("Разворачиваю массив... ");
+// Reverse(extended);
+// Numbers(extended);
+// Average(extended);
 
 
 /*-------------------------------------------------------------------*/
@@ -76,12 +78,49 @@ int[] AddNumbers(int[] array1)
     return result;
 }
 
+int CountMatches(int[] array1, int num)
+{
+    int counter = 0;
+    for (int i = 0; i < array1.Length; i++)
+    {
+        if (array1[i] == num) counter++;
+    }
+    return counter;
+}
+
 int[] RemoveNumbers(int[] array1)
 {
     int[] candidates = SetNumbers("Введите числа, которые вы хотите убрать, через пробел: ");
-    int[] result = new int[array1.Length-candidates.Length];
-
+    int[] matches = new int[candidates.Length];
+    bool zeroMatches = false;
+    int sizeDifference = 0;
+    for (int i = 0; i < candidates.Length; i++)
+    {
+        int j = array1.Length - 1;
+        matches[i] = CountMatches(array1, candidates[i]);
+        if (matches[i] == 0)
+        {
+            zeroMatches = true;
+        }
+        else
+        {
+            zeroMatches = false;
+        }
+    }
+    if (zeroMatches)
+    {
+        Console.WriteLine("Совпадений нет.");
+        return array1;
+    }
+    Numbers(matches);
+    sizeDifference = Sum(matches);
+    int[] result = new int[array1.Length - sizeDifference];
+    // for (int i=0; i<array1.Length;i++)
+    // {
+       
+    // }       
     return result;
+
 }
 
 void Numbers(int[] array1)
@@ -108,7 +147,7 @@ void Shuffle(int[] array1)
 void Reverse(int[] array1)
 {
     int temp = 0;
-    for (int i = 0; i < array1.Length/2; i++)
+    for (int i = 0; i < array1.Length / 2; i++)
     {
         temp = array1[i];
         array1[i] = array1[array1.Length - 1 - i];
@@ -141,12 +180,12 @@ void SortDecend(int[] array1)
     Reverse(array1);
 }
 
-void Sum(int[] array1)
+int Sum(int[] array1)
 {
     int result = 0;
     for (int i = 0; i < array1.Length; i++)
         result += array1[i];
-    Console.WriteLine($"Сумма всех элементов равна: {result}.");
+    return result;
 }
 
 void SumUnevenPos(int[] array1)
