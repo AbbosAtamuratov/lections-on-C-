@@ -127,7 +127,7 @@ int[] RemoveNumbers(int[] array1)
         Console.WriteLine("Совпадений нет.");
         return array1;
     }
-    Numbers(matches);
+    PrintArray(matches);
     sizeDifference = Sum(matches);
     int[] result = new int[array1.Length - sizeDifference];
     for (int i = 0; i < array1.Length; i++)
@@ -135,14 +135,14 @@ int[] RemoveNumbers(int[] array1)
         for (int j = 0; j < matches.Length; j++)
             CornerTarget(array1, matches[j]);
     }
-    Numbers(array1);
+    PrintArray(array1);
     for (int i = 0; i < result.Length; i++)
         result[i]=array1[i];
     return result;
 
 }
 
-void Numbers(int[] array1)
+void PrintArray(int[] array1)
 {
     Console.Write("Ваш массив: ");
     for (int i = 0; i < array1.Length; i++)

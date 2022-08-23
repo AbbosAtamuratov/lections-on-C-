@@ -16,3 +16,9 @@ for (int i = 2; i < number; i++)
 {
     fibonacci[i] = fibonacci[i - 2] + fibonacci[i - 1];  
 }
+
+int ReadInt(string message)
+{
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine());
+}
