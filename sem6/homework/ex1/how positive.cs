@@ -9,48 +9,34 @@ int CountCommas(string input)
     return counter;
 }
 
-int[] Numerify(string message)
+int CountMinuses(string input)
 {
-    Console.Write(message);
-    string input = Console.ReadLine() + ",";
-    int[] result = new int[CountCommas(input)];
-    int cursor = 0;
-    int digitLen = 0;
-    int number = 0;
-    string notNumberYet = string.Empty;
-    int ires = 0;
+    int counter = 0;
     for (int i = 0; i < input.Length; i++)
-        if (input[i] == ',')
-        {
-            digitLen = i - cursor;
-            int[] numberByDecimals = new int[digitLen];
-            for (int j = cursor; j < digitLen; j++)
-            {
-                if (input[j]==' ') numberByDecimals[j] = 0;
-                else
-                {
-                notNumberYet = Char.ToString(input[j]);
-                numberByDecimals[j] = Convert.ToInt32(notNumberYet);
-                }
-            }
-            for (int k=0; k<digitLen; k++)
-            {
-                number+=numberByDecimals[k]*Convert.ToInt32(Math.Pow(10, digitLen-k));
-            }
-            cursor = i;
-            result[ires] = number;
-            ires++;
-        }
-    return result;
+        if (input[i] == '-')
+            counter++;
+    return counter;
 }
 
-void PrintArray(int[] array1)
+int CountZeros(string input)
 {
-    Console.Write("Ваш массив: ");
-    for (int i = 0; i < array1.Length; i++)
-        Console.Write(array1[i] + " ");
-    Console.WriteLine("\n");
+    int counter = 0;
+    for (int i = 0; i < input.Length; i++)
+        if (input[i] == '0')
+            counter++;
+    return counter;
 }
-/*------------------------*/
-int[] numbers = Numerify("Введите числа через запятую: ");
-PrintArray(numbers);
+
+/*--------MAIN-----------*/
+Console.Write("Введите цифры через запятую: ");
+string userInput = Console.ReadLine() + ",";
+userInput = userInput.Replace(" ", "");
+int numbersCount= CountCommas(userInput);
+if (userInput.Length==numbersCount)
+    {
+        Console.Write ("Цифр не обнаружено...");
+        return;
+    }
+int zeros = CountZeros(userInput);
+int minuses = CountMinuses(userInput);
+Console.WriteLine (numbersCount-zeros-minuses);
