@@ -22,7 +22,7 @@ int CountZeros(string input)
 {
     int counter = 0;
     for (int i = 0; i < input.Length; i++)
-        if (input[i] == '0')
+        if (input[i] == '0' && input[i-1] == ' ' && input[i+1] == ',')
             counter++;
     return counter;
 }
