@@ -22,7 +22,7 @@ int CountZeros(string input)
 {
     int counter = 0;
     for (int i = 0; i < input.Length; i++)
-        if (input[i] == '0' && input[i-1] == ' ' && input[i+1] == ',')
+        if (input[i] == '0' && input[i-1] == ',' && input[i+1] == ',')
             counter++;
     return counter;
 }
@@ -30,7 +30,6 @@ int CountZeros(string input)
 /*--------MAIN-----------*/
 Console.Write("Введите цифры через запятую: ");
 string userInput = Console.ReadLine() + ",";
-int zeros = CountZeros(userInput);
 userInput = userInput.Replace(" ", "");
 int numbersCount= CountCommas(userInput);
 if (userInput.Length==numbersCount)
@@ -38,5 +37,6 @@ if (userInput.Length==numbersCount)
         Console.Write ("Цифр не обнаружено...");
         return;
     }
+int zeros = CountZeros(userInput);
 int minuses = CountMinuses(userInput);
 Console.WriteLine (numbersCount-zeros-minuses);
