@@ -116,11 +116,6 @@ int[] RemoveNumbers(int[] array1)
     sizeDifference = Sum(matches);
     int[] result = new int[array1.Length - sizeDifference];
     string initialArrayToString = ArrayToString(array1) + " ";
-    // for (int i=0; i<candidates.Length;i++)
-    // {
-    //     if (matches[i]>0)
-    //         initialArrayToString = initialArrayToString.Replace(Convert.ToString(candidates[i]),"");
-    // }
     initialArrayToString = initialArrayToString.Trim(' ');
     initialArrayToString = initialArrayToString + " ";
     string[] initialNumbers = initialArrayToString.Split(' ', array1.Length);
