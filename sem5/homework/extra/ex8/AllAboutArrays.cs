@@ -8,36 +8,19 @@
 
 Console.Clear();
 
-// int[] range = SetNumbers("Введите элементы массива через пробел: ");
-// Numbers(range);
-// int[] shortRange = RemoveNumbers(range);
-// Numbers(shortRange);
-// int[] extended = AddNumbers(range);
-// Numbers(extended);
-// Console.WriteLine($"Сумма всех элементов равна: {Sum(extended)}.");
-// SortAscend(extended);
-// Console.WriteLine("Cортирую по возрастанию... ");
-// Numbers(extended);
-// MinMax(extended);
-// Console.WriteLine("Встряхнём содержимое... ");
-// Shuffle(extended);
-// Numbers(extended);
-// MinMaxDistance(extended);
-// Console.WriteLine("Cортирую по убыванию... ");
-// SortDecend(extended);
-// SumEvenPos(extended);
-// Console.WriteLine("Встряхнём содержимое... ");
-// Shuffle(extended);
-// Numbers(extended);
-// SumUnevenPos(extended);
-// Console.WriteLine("Разворачиваю массив... ");
-// Reverse(extended);
-// Numbers(extended);
-// Average(extended);
+int[] range = SetNumbers("Введите элементы массива через пробел: ");
+PrintArray(range);
+int[] shortRange = RemoveNumbers(range);
+PrintArray(shortRange);
 
 
-/*-------------------------------------------------------------------*/
-
+/*------------------------METHODS---------------------------------------------*/
+int ReadInt(string message)
+{
+    Console.Write(message);
+    return Convert.ToInt32(Console.ReadLine());
+}
+/*----SetNumbers и зона его ответственности---start---*/
 int CountSpaces(string input)
 {
     int counter = 0;
@@ -67,7 +50,9 @@ int[] SetNumbers(string message)
         }
     return result;
 }
+/*----SetNumbers и зона его ответственности---end---*/
 
+/*----AddNumbers и зона его ответственности---start---*/
 int[] AddNumbers(int[] array1)
 {
     int[] candidates = SetNumbers("Введите числа, которые вы хотите добавить, через пробел: ");
@@ -78,7 +63,9 @@ int[] AddNumbers(int[] array1)
         result[j] = candidates[j - array1.Length];
     return result;
 }
+/*----AddNumbers и зона его ответственности---end---*/
 
+/*----RemoveNumbers и зона его ответственности----start--*/
 int CountMatches(int[] array1, int num)
 {
     int counter = 0;
@@ -89,18 +76,24 @@ int CountMatches(int[] array1, int num)
     return counter;
 }
 
-void CornerTarget(int[] array1, int target)
+string ArrayToString(int[] array1)
 {
+    string initialArrayToString = string.Empty;
     for (int i = 0; i < array1.Length; i++)
     {
-        if (array1[i] == target)
-        {
-            int tmp = array1[i];
-            for (int j = i; j < array1.Length - i - 1; j++)
-                array1[j] = array1[j + 1];
-            array1[array1.Length - 1] = tmp;
-        }
+        initialArrayToString = initialArrayToString + " " + array1[i];
     }
+    initialArrayToString = initialArrayToString.Remove(0, 1);
+    return initialArrayToString;
+}
+
+string NoExcessSpaces(string input)
+{
+    input = input.Trim(' ');
+    for (int i=0; i<input.Length; i++)
+        if (input[i]==' ' && input[i+1]==' ')
+            input=input.Remove(i,1);
+    return input;
 }
 
 int[] RemoveNumbers(int[] array1)
@@ -113,35 +106,42 @@ int[] RemoveNumbers(int[] array1)
     {
         int j = array1.Length - 1;
         matches[i] = CountMatches(array1, candidates[i]);
-        if (matches[i] == 0)
-        {
-            zeroMatches = true;
-        }
-        else
-        {
-            zeroMatches = false;
-        }
     }
+    if (Sum(matches) == 0) zeroMatches = true;
     if (zeroMatches)
     {
         Console.WriteLine("Совпадений нет.");
         return array1;
     }
-    PrintArray(matches);
     sizeDifference = Sum(matches);
     int[] result = new int[array1.Length - sizeDifference];
+    string initialArrayToString = ArrayToString(array1) + " ";
+    // for (int i=0; i<candidates.Length;i++)
+    // {
+    //     if (matches[i]>0)
+    //         initialArrayToString = initialArrayToString.Replace(Convert.ToString(candidates[i]),"");
+    // }
+    initialArrayToString = initialArrayToString.Trim(' ');
+    initialArrayToString = initialArrayToString + " ";
+    string[] initialNumbers = initialArrayToString.Split(' ', array1.Length);
+    initialArrayToString = string.Empty;
     for (int i = 0; i < array1.Length; i++)
     {
-        for (int j = 0; j < matches.Length; j++)
-            CornerTarget(array1, matches[j]);
+        for (int j = 0; j < candidates.Length; j++)
+            if (initialNumbers[i] == Convert.ToString(candidates[j]))
+                initialNumbers[i] = string.Empty;
+            initialArrayToString = initialArrayToString + initialNumbers[i]+" ";
     }
-    PrintArray(array1);
+    initialArrayToString=NoExcessSpaces(initialArrayToString);
+    string[] newNumbers = initialArrayToString.Split(' ', result.Length);
     for (int i = 0; i < result.Length; i++)
-        result[i]=array1[i];
+        result[i] = Convert.ToInt32(newNumbers[i]);
     return result;
 
 }
+/*----RemoveNumbers и зона его ответственности----end--*/
 
+/*----Далее односложные методы------------------------*/
 void PrintArray(int[] array1)
 {
     Console.Write("Ваш массив: ");
