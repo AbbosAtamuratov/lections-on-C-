@@ -1,4 +1,4 @@
-﻿// Написать программу со следующими командами:
+// Написать программу со следующими командами:
 // - SetNumbers – пользователь вводит числа через пробел, а программа запоминает их в массив
 // - AddNumbers – пользователь вводит числа, которые добавятся к уже существующему массиву
 // - RemoveNumbers -  пользователь вводит числа, которые если  найдутся в массиве, то будут удалены
@@ -8,10 +8,117 @@
 
 Console.Clear();
 
-int[] range = SetNumbers("Введите элементы массива через пробел: ");
-PrintArray(range);
-int[] shortRange = RemoveNumbers(range);
-PrintArray(shortRange);
+bool atWork = true;
+string userArray = string.Empty;
+
+while (atWork)
+{
+    Console.WriteLine($"Введите команду или help: ");
+    string userCommand = Console.ReadLine();
+    switch (userCommand)
+    {
+        case "SetNumbers":
+            int[] numbers = SetNumbers("Введите числа через пробел: ");
+            userArray = string.Empty;
+            userArray = ArrayToString(numbers);
+            Console.WriteLine("готово...");
+            break;
+        case "AddNumbers":
+            int[] currentNumbers = BackToArray(userArray);
+            int[] extendedNumbers = AddNumbers(currentNumbers);
+            userArray = string.Empty;
+            userArray = ArrayToString(extendedNumbers);
+            Console.WriteLine("готово...");
+            break;
+        case "RemoveNumbers":
+            int[] currentNumberz = BackToArray(userArray);
+            int[] shortNumbers = RemoveNumbers(currentNumberz);
+            userArray = string.Empty;
+            userArray = ArrayToString(shortNumbers);
+            Console.WriteLine("готово...");
+            break;
+        case "Numbers":
+            Console.Write("Ваш массив: ");
+            Console.WriteLine(userArray);
+            break;
+        case "Sum":
+            int[] numeros = BackToArray(userArray);
+            int result = Sum(numeros);
+            userArray = string.Empty;
+            userArray = ArrayToString(numeros);
+            Console.WriteLine($"Сумма всех элементов равна: {result}.");
+            break;
+        case "SumEven":
+            int[] nombres = BackToArray(userArray);
+            int resulto = SumEvenPos(nombres);
+            userArray = string.Empty;
+            userArray = ArrayToString(nombres);
+            Console.WriteLine($"Сумма всех элементов на чётных позициях равна: {resulto}.");
+            break;
+        case "SumUneven":
+            int[] numeroZ = BackToArray(userArray);
+            int resultz = SumUnevenPos(numeroZ);
+            userArray = string.Empty;
+            userArray = ArrayToString(numeroZ);
+            Console.WriteLine($"Сумма всех элементов на нечётных позициях равна: {resultz}.");
+            break;
+        case "Average":
+            int[] zahlen = BackToArray(userArray);
+            double durchschnitt = Average(zahlen);
+            userArray = string.Empty;
+            userArray = ArrayToString(zahlen);
+            Console.WriteLine($"Среднее арифметическое от элментов массива равно: {durchschnitt}.");
+            break;
+        case "MinMax":
+            int[] chisla = BackToArray(userArray);
+            int diff = MinMax(chisla);
+            userArray = string.Empty;
+            userArray = ArrayToString(chisla);
+            Console.WriteLine($"Разница между максимальным и значениями равна: {diff}.");
+            break;
+        case "MinMaxDist":
+            int[] newChisla = BackToArray(userArray);
+            MinMaxDistance(newChisla);
+            userArray = string.Empty;
+            userArray = ArrayToString(newChisla);
+            break;
+        case "Shuffle":
+            int[] newZahlen = BackToArray(userArray);
+            Shuffle(newZahlen);
+            userArray = string.Empty;
+            userArray = ArrayToString(newZahlen);
+            Console.WriteLine("готово...");
+            break;
+        case "SortAscend":
+            int[] sorted = BackToArray(userArray);
+            SortAscend(sorted);
+            userArray = string.Empty;
+            userArray = ArrayToString(sorted);
+            Console.WriteLine("готово...");
+            break;
+        case "SortDecend":
+            int[] sortedNumbers = BackToArray(userArray);
+            SortDecend(sortedNumbers);
+            userArray = string.Empty;
+            userArray = ArrayToString(sortedNumbers);
+            Console.WriteLine("готово...");
+            break;
+        case "Reverse":
+            int[] backwards = BackToArray(userArray);
+            Reverse(backwards);
+            userArray = string.Empty;
+            userArray = ArrayToString(backwards);
+            Console.WriteLine("готово...");
+            break;
+        case "exit":
+            atWork = false;
+            Console.WriteLine("Всего хорошего...");
+            break;
+        default:
+            Console.WriteLine("Команда не распознана...");
+            break;
+    }
+}
 
 
 /*------------------------METHODS---------------------------------------------*/
@@ -20,7 +127,7 @@ int ReadInt(string message)
     Console.Write(message);
     return Convert.ToInt32(Console.ReadLine());
 }
-/*----SetNumbers и зона его ответственности---start---*/
+/*----SetNumbers и зона его контроля---start---*/
 int CountSpaces(string input)
 {
     int counter = 0;
@@ -50,9 +157,23 @@ int[] SetNumbers(string message)
         }
     return result;
 }
-/*----SetNumbers и зона его ответственности---end---*/
+/*----SetNumbers и зона его контроля---end---*/
 
-/*----AddNumbers и зона его ответственности---start---*/
+/*----AddNumbers и зона его контроля---start---*/
+
+int[] BackToArray(string array1)
+{
+    array1 = NoExcessSpaces(array1);
+    int size = CountSpaces(array1) + 1;
+    int[] result = new int[size];
+    string[] newNumbers = array1.Split(' ', size);
+    for (int i = 0; i < size; i++)
+    {
+        result[i] = Convert.ToInt32(newNumbers[i]);
+    }
+    return result;
+}
+
 int[] AddNumbers(int[] array1)
 {
     int[] candidates = SetNumbers("Введите числа, которые вы хотите добавить, через пробел: ");
@@ -63,9 +184,9 @@ int[] AddNumbers(int[] array1)
         result[j] = candidates[j - array1.Length];
     return result;
 }
-/*----AddNumbers и зона его ответственности---end---*/
+/*----AddNumbers и зона его контроля---end---*/
 
-/*----RemoveNumbers и зона его ответственности----start--*/
+/*----RemoveNumbers и зона его контроля----start--*/
 int CountMatches(int[] array1, int num)
 {
     int counter = 0;
@@ -90,9 +211,12 @@ string ArrayToString(int[] array1)
 string NoExcessSpaces(string input)
 {
     input = input.Trim(' ');
-    for (int i=0; i<input.Length; i++)
-        if (input[i]==' ' && input[i+1]==' ')
-            input=input.Remove(i,1);
+    for (int i = 0; i < input.Length; i++)
+        if (input[i] == ' ' && input[i + 1] == ' ')
+        {
+            input = input.Remove(i, 1);
+            i--;
+        }
     return input;
 }
 
@@ -114,10 +238,7 @@ int[] RemoveNumbers(int[] array1)
         return array1;
     }
     sizeDifference = Sum(matches);
-    int[] result = new int[array1.Length - sizeDifference];
-    string initialArrayToString = ArrayToString(array1) + " ";
-    initialArrayToString = initialArrayToString.Trim(' ');
-    initialArrayToString = initialArrayToString + " ";
+    string initialArrayToString = ArrayToString(array1);
     string[] initialNumbers = initialArrayToString.Split(' ', array1.Length);
     initialArrayToString = string.Empty;
     for (int i = 0; i < array1.Length; i++)
@@ -125,16 +246,38 @@ int[] RemoveNumbers(int[] array1)
         for (int j = 0; j < candidates.Length; j++)
             if (initialNumbers[i] == Convert.ToString(candidates[j]))
                 initialNumbers[i] = string.Empty;
-            initialArrayToString = initialArrayToString + initialNumbers[i]+" ";
+        initialArrayToString = initialArrayToString + initialNumbers[i] + " ";
     }
-    initialArrayToString=NoExcessSpaces(initialArrayToString);
-    string[] newNumbers = initialArrayToString.Split(' ', result.Length);
-    for (int i = 0; i < result.Length; i++)
-        result[i] = Convert.ToInt32(newNumbers[i]);
+    int[] result = BackToArray(initialArrayToString);
     return result;
 
 }
-/*----RemoveNumbers и зона его ответственности----end--*/
+/*----RemoveNumbers и зона его контроля----end--*/
+
+/*--Help и зона его контроля-----start--------*/
+
+string commandList[,] = new string[2,9]
+{
+    // {"command11"},
+    // {"command2", "description2"},
+};
+
+void Help ()
+{
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+    Console.WriteLine($"Список комманд:");
+}
 
 /*----Далее односложные методы------------------------*/
 void PrintArray(int[] array1)
@@ -142,7 +285,6 @@ void PrintArray(int[] array1)
     Console.Write("Ваш массив: ");
     for (int i = 0; i < array1.Length; i++)
         Console.Write(array1[i] + " ");
-    Console.WriteLine("\n");
 }
 
 void Shuffle(int[] array1)
@@ -202,32 +344,32 @@ int Sum(int[] array1)
     return result;
 }
 
-void SumUnevenPos(int[] array1)
+int SumUnevenPos(int[] array1)
 {
     int result = 0;
     for (int i = 0; i < array1.Length; i += 2)
         result += array1[i];
-    Console.WriteLine($"Сумма всех элементов на нечётных позициях равна: {result}.");
+    return result;
 }
 
-void SumEvenPos(int[] array1)
+int SumEvenPos(int[] array1)
 {
     int result = 0;
     for (int i = 1; i < array1.Length; i += 2)
         result += array1[i];
-    Console.WriteLine($"Сумма всех элементов на чётных позициях равна: {result}.");
+    return result;
 }
 
-void Average(int[] array1)
+double Average(int[] array1)
 {
     double result = 0;
     for (int i = 0; i < array1.Length; i++)
         result += array1[i];
     result = Math.Round(result / array1.Length, 2);
-    Console.WriteLine($"Среднее арифметическое от элментов массива равно: {result}.");
+    return result;
 }
 
-void MinMax(int[] array1)
+int MinMax(int[] array1)
 {
     int result = 0;
     int min = array1[0];
@@ -238,7 +380,7 @@ void MinMax(int[] array1)
         if (array1[i] < min) min = array1[i];
     }
     result = max - min;
-    Console.WriteLine($"Разница между максимальным и значениями равна: {result}.");
+    return result;
 }
 
 void MinMaxDistance(int[] array1)
