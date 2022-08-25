@@ -1,4 +1,4 @@
-// Написать программу со следующими командами:
+﻿// Написать программу со следующими командами:
 // - SetNumbers – пользователь вводит числа через пробел, а программа запоминает их в массив
 // - AddNumbers – пользователь вводит числа, которые добавятся к уже существующему массиву
 // - RemoveNumbers -  пользователь вводит числа, которые если  найдутся в массиве, то будут удалены
@@ -109,6 +109,9 @@ while (atWork)
             userArray = string.Empty;
             userArray = ArrayToString(backwards);
             Console.WriteLine("готово...");
+            break;
+        case "help":
+            Help();
             break;
         case "exit":
             atWork = false;
@@ -256,11 +259,11 @@ int[] RemoveNumbers(int[] array1)
 
 /*--Help и зона его контроля-----start--------*/
 
-string commandList[,] = new string[2,9]
-{
-    // {"command11"},
-    // {"command2", "description2"},
-};
+// string commandList[,] = new string[2,9]
+// {
+//     // {"command11"},
+//     // {"command2", "description2"},
+// };
 
 void Help ()
 {
@@ -280,12 +283,6 @@ void Help ()
 }
 
 /*----Далее односложные методы------------------------*/
-void PrintArray(int[] array1)
-{
-    Console.Write("Ваш массив: ");
-    for (int i = 0; i < array1.Length; i++)
-        Console.Write(array1[i] + " ");
-}
 
 void Shuffle(int[] array1)
 {
