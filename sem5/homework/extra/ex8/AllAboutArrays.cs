@@ -1,4 +1,4 @@
-﻿// Написать программу со следующими командами:
+// Написать программу со следующими командами:
 // - SetNumbers – пользователь вводит числа через пробел, а программа запоминает их в массив
 // - AddNumbers – пользователь вводит числа, которые добавятся к уже существующему массиву
 // - RemoveNumbers -  пользователь вводит числа, которые если  найдутся в массиве, то будут удалены
@@ -10,6 +10,21 @@ Console.Clear();
 
 bool atWork = true;
 string userArray = string.Empty;
+string[,] commandList = new string[12, 2]
+{
+    {"SetNumbers -", "задаёт массив из введённых пользователем числа через пробел."}, //1
+    {"AddNumbers -", "добавяет к уже существующему массиву введённые пользователем числа через пробел."},//2
+    {"RemoveNumbers -","удаяет из уже существующего массива введённые пользователем числа через пробел."},//3
+    {"Sum -","суммирует все элементы массива."}, //4
+    {"SumEven -","суммирует все элементы массива на чётных позициях."}, //5
+    {"SumUneven -","суммирует все элементы массива на нечётных позициях."}, //6
+    {"Average -","считает среднее арифметическое всех элементов массива"}, //7
+    {"Shuffle -","перемешивает элементы массива в произвольном порядке"}, //8
+    {"Reverse -","разворачивает массив"}, //9
+    {"SortAscend -", "сортирует массив по возрастанию"}, //10
+    {"SortDecend -", "сортирует массив по убыванию"}, //11
+    {"exit -","завершает работу программы."} //12
+};
 
 while (atWork)
 {
@@ -111,7 +126,7 @@ while (atWork)
             Console.WriteLine("готово...");
             break;
         case "help":
-            Help();
+            Help(commandList);
             break;
         case "exit":
             atWork = false;
@@ -257,32 +272,20 @@ int[] RemoveNumbers(int[] array1)
 }
 /*----RemoveNumbers и зона его контроля----end--*/
 
-/*--Help и зона его контроля-----start--------*/
+/*----Далее односложные методы------------------------*/
 
-// string commandList[,] = new string[2,9]
-// {
-//     // {"command11"},
-//     // {"command2", "description2"},
-// };
-
-void Help ()
+void Help(string[,] commandList)
 {
     Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
-    Console.WriteLine($"Список комманд:");
+    for (int i = 0; i < commandList.GetLength(0); i++)
+    {
+        for (int j = 0; j < commandList.GetLength(1); j++)
+        {
+                Console.Write($"{commandList[i, j]}  ");
+        }
+        Console.WriteLine("");
+    }
 }
-
-/*----Далее односложные методы------------------------*/
 
 void Shuffle(int[] array1)
 {
