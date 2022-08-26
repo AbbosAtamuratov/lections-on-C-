@@ -39,16 +39,16 @@ int[,] numbers = new int[rows, cols];
 FillArray2D(numbers);
 PrintArray2D(numbers);
 
-for (int i = 0; i < array.GetLength(0); i++)
+for (int i = 0; i < numbers.GetLength(0); i++)
 {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int j = 0; j < numbers.GetLength(1); j++)
     {
         if (i % 2 == 1 && j % 2 == 1)
         {
-            array[i, j] *= array[i, j];
+            numbers[i, j] *= numbers[i, j];
         }
 
     }
 
 }
-PrintArray2D(array);
+PrintArray2D(numbers);
