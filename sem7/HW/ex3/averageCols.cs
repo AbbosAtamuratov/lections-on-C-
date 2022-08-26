@@ -1,4 +1,4 @@
-﻿// Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
+// Задайте двумерный массив из целых чисел. Найдите среднее арифметическое элементов в каждом столбце.
 
 int ReadInt(string message)
 {
@@ -55,12 +55,13 @@ int[,] numbers = new int[rows, cols];
 FillArray2D(numbers);
 PrintArray2D(numbers);
 
-int[] Col;
-for (int i = 0; i < numbers.GetLength(0); i++)
+for (int j = 0; j < numbers.GetLength(1); j++)
 {
     int sum = 0;
-    int currentCol=0;
-    
-//     double avg = sum / numbers.GetLength(1);
-//     Console.WriteLine ($"Среднее арифметическое столбца {currentCol+1} : {avg}");
+    for (int i = 0; i < numbers.GetLength(0); i++)
+    {
+        sum += numbers[i, j];
+    }
+    double avg = Convert.ToDouble(sum) / numbers.GetLength(0);
+    Console.WriteLine($"{Math.Round(avg,2)}");
 }
