@@ -6,10 +6,11 @@ string[,] commandList = new string[8, 2]
 {
     {"SeeCrew - ", "выводит досье всех сотрудников."}, //1
     {"AddFile - ", "добавяет к уже существующей базе досье."},//2
-    {"RemoveFile - ","удаяет досье под номером, введённым пользователем через пробел после имени комнды."},//3
+    {"RemoveFile № - ","удаяет досье под номером, дописанным пользователем."},//3
     {"FindByName - ","находит досье по фамилии и выводит его на экран."}, //4
-    {"ShowBelow - ","суммирует все элементы массива на чётных позициях."}, //5
-    {"ShowAll- ","показывает все досье с указанной должностью," 
+    {"ShowBelow - ","показывает всех сотрудников с ЗП ниже, ."
+                                +"введённого пользователем через пробел после имени комнды."}, //5
+    {"ShowAll - ","показывает все досье с указанной должностью, " 
                                 + " введённой пользователем через пробел после имени комнды."}, //6
     {"AverageRate - ","считает среднюю зарплату всех сотрудников"}, //7
     {"exit - ","завершает работу программы."} //8
@@ -45,7 +46,9 @@ while (atWork)
             string inputOccup = Console.ReadLine();
             Console.Write("Введите зарплату сотрудника: ");
             string inputSalary = Console.ReadLine();
-            
+            currentNames = string.Concat(currentNames,"*",inputName);
+            currentOccups =string.Concat(currentOccups,"*",inputOccup);
+            currentWagers = string.Concat(currentWagers,"*",inputSalary);
             break;
         case "exit":
             atWork = false;
