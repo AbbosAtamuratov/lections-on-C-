@@ -9,16 +9,16 @@ string[,] commandList = new string[8, 2]
     {"RemoveFile - ","удаяет досье под номером, введённым пользователем через пробел после имени комнды."},//3
     {"FindByName - ","находит досье по фамилии и выводит его на экран."}, //4
     {"ShowBelow - ","суммирует все элементы массива на чётных позициях."}, //5
-    {"ShowAll- ","показывает все досье с указанной должностью, " 
-                                + "введённой пользователем через пробел после имени комнды."}, //6
+    {"ShowAll- ","показывает все досье с указанной должностью," 
+                                + " введённой пользователем через пробел после имени комнды."}, //6
     {"AverageRate - ","считает среднюю зарплату всех сотрудников"}, //7
     {"exit - ","завершает работу программы."} //8
 };
 
 bool atWork = true;
-string currentNames = string.Empty;
-string currentOccups = string.Empty;
-string currentWagers = string.Empty;
+string currentNames = GlueArray(names);
+string currentOccups = GlueArray(occupations);
+string currentWagers = GlueArray(salaries);
 
 while (atWork)
 {
@@ -30,7 +30,13 @@ while (atWork)
             Help(commandList);
             break;
         case "SeeCrew":
-            SeeCrew(names, occupations, salaries);
+            string[] currNames = BackToArray(currentNames);
+            string[] currOccups = BackToArray(currentOccups);
+            string[] currWagers = BackToArray(currentWagers);
+            SeeCrew(currNames, currOccups, currWagers);
+            currentNames = GlueArray(currNames);
+            currentOccups = GlueArray(currOccups);
+            currentWagers = GlueArray(currWagers);
             break;
         case "AddFile":
             Console.Write("Введите фамилию и имя сотрудника: ");
@@ -39,6 +45,7 @@ while (atWork)
             string inputOccup = Console.ReadLine();
             Console.Write("Введите зарплату сотрудника: ");
             string inputSalary = Console.ReadLine();
+            
             break;
         case "exit":
             atWork = false;
@@ -78,37 +85,33 @@ void SeeCrew(string[] name, string[] occup, string[] wager)
 
 /*_____________ADD FILES & control zone_______start___________*/
 
-string[] AddNames(string[] names, string input)
+string GlueArray (string[] array)
 {
-    string[] newName = new string[names.Length + 1];
-    for (int i = 0; i < names.Length; i++)
+    string result = string.Empty;
+    for (int i = 0; i < array.Length; i++)
     {
-        newName[i] = names[i];
+        result = array[i] + "*" + result;    
     }
-    newName[newName.Length - 1] = input;
-    return newName;
+    return result;
 }
 
-string[] AddOccup(string[] occup, string input)
+string[] BackToArray(string gluedArr)
 {
-    string[] newOccup = new string[occup.Length + 1];
-    for (int i = 0; i < occup.Length; i++)
-    {
-        newOccup[i] = occup[i];
-    }
-    newOccup[newOccup.Length - 1] = input;
-    return newOccup;
+    int size = CountMarkers(gluedArr)+1; 
+    string[] result = new string[size]; 
+    result = gluedArr.Split('*',size);
+    return result;
 }
 
-string[] AddSalary(string[] wager, string input)
+int CountMarkers (string splitable)
 {
-    string[] newWager = new string[wager.Length + 1];
-    for (int i = 0; i < wager.Length; i++)
+    int counter = 0;
+    for (int i = 0; i < splitable.Length; i++)
     {
-        newWager[i] = wager[i];
+        if (splitable[i] == '*')
+            counter++;
     }
-    newWager[newWager.Length - 1] = input;
-    return newWager;
+    return counter;
 }
 
 /*_____________ADD FILES & control zone_______end___________*/
