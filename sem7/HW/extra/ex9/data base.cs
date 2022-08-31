@@ -12,7 +12,7 @@ string[,] commandList = new string[10, 2]
     {"ShowAll - ","показывает все досье с указанной должностью, "
                                 + " введённой пользователем через пробел после имени комнды."}, //6
     {"AverageRate - ","считает среднюю зарплату всех сотрудников"}, //7
-    {"ShowFile# - ","показывает досье под определённым номером."},
+    {"ShowFile# - ","показывает досье под определённым номером."}, // 8
     {"FindNamesakes - ","находит однофамильцев и выводит на экран номера их досье."}, //9
     {"exit - ","завершает работу программы."} //10
 };
@@ -75,7 +75,17 @@ while (atWork)
             currentOccups = GlueArray(tempoOccups);
             currentWagers = GlueArray(tempoWagers);
             break;
-        case "exit": 
+        case "ShowFile#":  // ShowFile#
+            string[] temporNames = BackToArray(currentNames);
+            string[] temporOccups = BackToArray(currentOccups);
+            string[] temporWagers = BackToArray(currentWagers);
+            int targetN = ReadInt ("Введите номер досье: ");
+            Console.WriteLine($"{targetN}. {temporNames[targetN-1]} - {temporOccups[targetN-1]} - {temporWagers[targetN-1]}");
+            currentNames = GlueArray(temporNames);
+            currentOccups = GlueArray(temporOccups);
+            currentWagers = GlueArray(temporWagers);
+            break;
+        case "exit":  // ShowFile#
             atWork = false;
             Console.WriteLine("Всего хорошего...");
             break;
