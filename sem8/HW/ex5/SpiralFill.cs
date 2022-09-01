@@ -6,7 +6,7 @@ void PrintArray2D(int[,] array)
     {
         for (int j = 0; j < array.GetLength(1); j++)
         {
-            if (array[i,j]<10)
+            if (array[i, j] < 10)
                 Console.Write($"0{array[i, j]} ");
             else
                 Console.Write(array[i, j] + " ");
@@ -24,14 +24,27 @@ int ReadInt(string message)
 
 void FillArraySpirally(int[,] array)
 {
+    int m = 0;
     int starter = 1;
-    int steps = 2*array.GetLength(0)-1;
-    for (int m = 0; m < steps; m++)
+    while (m < array.GetLength(0))
     {
-        for (int i = 0; i < array.GetLength(1)-m; i++)
+        for (int j = m; j < array.GetLength(1)-m; j++)
         {
-           
-        }        
+            array[m, j] = starter;
+            starter++;
+        }
+        m++;
+        for (int i = m; i <= array.GetLength(0)-m; i++)
+        {
+            array[i, array.GetLength(1) - 1] = starter;
+            starter++;
+        }
+
+        for (int j = array.GetLength(1) - m - 1; j >= 0; j--)
+        {
+            array[array.GetLength(0) - m, j] = starter;
+            starter++;
+        }
     }
 }
 
