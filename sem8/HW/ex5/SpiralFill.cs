@@ -24,34 +24,49 @@ int ReadInt(string message)
 
 void FillArraySpirally(int[,] array)
 {
-    int m = 0;
-    int starter = 1;
-    while (m < array.GetLength(0))
-    {
-        for (int j = m; j < array.GetLength(1)-m; j++)
-        {
-            array[m, j] = starter;
-            starter++;
-        }
-        m++;
-        for (int i = m; i <= array.GetLength(0)-m; i++)
-        {
-            array[i, array.GetLength(1) - 1] = starter;
-            starter++;
-        }
+    int number = 1;
+    int cursor = 0;
+    int shift = 0;
 
-        for (int j = array.GetLength(1) - m - 1; j >= 0; j--)
-        {
-            array[array.GetLength(0) - m, j] = starter;
-            starter++;
-        }
+    for (int j = 0; j < array.GetLength(1); j++)
+    {
+        array[0, j] = number;
+        number++;
+    }
+    for (int i = 1; i < array.GetLength(0); i++)
+    {
+        array[i, array.GetLength(1) - 1] = number;
+        number++;
+    }
+    for (int j = array.GetLength(1) - 1 - 1; j >= 0; j--)
+    {
+        array[array.GetLength(0) - 1, j] = number;
+        number++;
+    }
+    for (int i = array.GetLength(0) - 1 - 1; i > 0; i--)
+    {
+        array[i, 0] = number;
+        number++;
+    }
+    for (int j = 1; j < array.GetLength(1) - 1; j++)
+    {
+        array[1, j] = number;
+        number++;
+    }
+    for (int i = 0 + 1 + 1; i < array.GetLength(0) - 1; i++)
+    {
+        array[i, array.GetLength(1) - 1 - 1] = number;
+        number++;
+    }
+    for (int j = array.GetLength(1) - 1 - 1 - 1; j > 0; j--)
+    {
+        array[array.GetLength(0) - 1-1, j] = number;
+        number++;
     }
 }
 
 Console.Clear();
-int rows = ReadInt("Введите количество строк: ");
-int columns = ReadInt("Введите количество столбцов: ");
-int[,] array = new int[rows, columns];
+int[,] array = new int[4, 4];
 
 FillArraySpirally(array);
 PrintArray2D(array);
