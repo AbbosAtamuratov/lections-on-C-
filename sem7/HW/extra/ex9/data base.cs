@@ -17,6 +17,8 @@ string[,] commandList = new string[10, 2]
     {"exit - ","завершает работу программы."} //10
 };
 
+
+
 bool atWork = true;
 string currentNames = GlueArray(names);
 string currentOccups = GlueArray(occupations);
@@ -61,7 +63,7 @@ while (atWork)
             currentWagers = GlueArray(tempWagers);
             Console.WriteLine("готово...");
             break;
-        case "FindByName":  
+        case "FindByName":
             string[] tempoNames = BackToArray(currentNames);
             string[] tempoOccups = BackToArray(currentOccups);
             string[] tempoWagers = BackToArray(currentWagers);
@@ -70,22 +72,34 @@ while (atWork)
             if (targetI == -1)
                 Console.WriteLine("Сотрудник не найден");
             else
-                Console.WriteLine($"{targetI+1}. {tempoNames[targetI]} - {tempoOccups[targetI]} - {tempoWagers[targetI]}");
+                Console.WriteLine($"{targetI + 1}. {tempoNames[targetI]} - {tempoOccups[targetI]} - {tempoWagers[targetI]}");
             currentNames = GlueArray(tempoNames);
             currentOccups = GlueArray(tempoOccups);
             currentWagers = GlueArray(tempoWagers);
             break;
-        case "ShowFile#":  // ShowFile#
+        case "ShowFile#":  
             string[] temporNames = BackToArray(currentNames);
             string[] temporOccups = BackToArray(currentOccups);
             string[] temporWagers = BackToArray(currentWagers);
-            int targetN = ReadInt ("Введите номер досье: ");
-            Console.WriteLine($"{targetN}. {temporNames[targetN-1]} - {temporOccups[targetN-1]} - {temporWagers[targetN-1]}");
+            int targetN = ReadInt("Введите номер досье: ");
+            ShowFileN (temporNames, temporOccups, temporWagers, targetN);
             currentNames = GlueArray(temporNames);
             currentOccups = GlueArray(temporOccups);
             currentWagers = GlueArray(temporWagers);
             break;
-        case "exit":  // ShowFile#
+        case "ShowBelow":
+            int inputAmount = ReadInt("Введите сумму: ");
+            string[] zahlen = BackToArray(currentNames);
+            string[] besetzung = BackToArray(currentOccups);
+            string[] gehalt = BackToArray(currentWagers);
+            Console.WriteLine("Сотрудники с зарплатой ниже введённой: ");
+            int[] belows = FindBelow(gehalt, inputAmount);
+            if (belows[0] == -1)
+                Console.WriteLine("Совпадений нет...");
+            else
+                ShowBelow(zahlen, besetzung, gehalt, belows);
+            break;
+        case "exit":  
             atWork = false;
             Console.WriteLine("Всего хорошего...");
             break;
@@ -118,9 +132,9 @@ string GlueArray(string[] array)
     for (int i = 0; i < array.Length; i++)
     {
         if (array[i] != string.Empty)
-            result = result + "*" +  array[i];
+            result = result + "*" + array[i];
     }
-    result = result.Remove(0,1);
+    result = result.Remove(0, 1);
     return result;
 }
 
@@ -145,6 +159,35 @@ int CountMarkers(string splitable)
 
 /*_____________ADD FILES & control zone_______end___________*/
 
+/*------------------------ShowBelow control zone-----start---*/
+
+int[] FindBelow (string[] wagers, int target)
+{
+    int counter = 0;
+    int[] result = new int [wagers.Length];
+    for (int i = 0; i < wagers.Length; i++)
+        if (Convert.ToInt32(wagers[i].Replace(" ", "")) < target)
+        {
+            counter++;
+            result[i] = i+1;
+        }
+    if (counter == 0)
+        result[0] = -1;
+    return result;
+
+}
+
+void ShowBelow (string[] names, string[] occups, string[] wagers, int[] targets)
+{
+    for (int i = 0; i < targets.Length; i++)
+        if (targets[i] != 0)
+            ShowFileN(names, occups, wagers, targets[i]);
+        else
+            break;
+}
+
+/*------------------------ShowBelow control zone-----end-----*/
+
 /*__________________односложные методы__________________________*/
 
 string[] RemoveTarget(string[] array, int target)
@@ -152,17 +195,17 @@ string[] RemoveTarget(string[] array, int target)
     string[] result = new string[array.Length - 1];
     for (int i = 0; i < target; i++)
         result[i] = array[i];
-    for (int i = target-1; i < result.Length; i++)
-        result[i] = array[i+1];
+    for (int i = target - 1; i < result.Length; i++)
+        result[i] = array[i + 1];
     return result;
 }
 
-int FindByName (string[] array, string name)
+int FindByName(string[] array, string name)
 {
     int targetIndex = -1;
     for (int i = 0; i < array.Length; i++)
     {
-        if (array[i].Substring(array[i].IndexOf(' ')+1, array[i].Length-array[i].IndexOf(' ') -1) == name)
+        if (array[i].Substring(array[i].IndexOf(' ') + 1, array[i].Length - array[i].IndexOf(' ') - 1) == name)
         {
             targetIndex = i;
             break;
@@ -191,4 +234,9 @@ void SeeCrew(string[] name, string[] occup, string[] wager)
         Console.WriteLine($"{i + 1}. {name[i]} - {occup[i]} - {wager[i]}");
     }
     Console.WriteLine();
+}
+
+void ShowFileN(string[] a, string[] b, string[] c, int number)
+{
+    Console.WriteLine($"{number}. {a[number - 1]} - {b[number - 1]} - {c[number - 1]}\n");
 }
