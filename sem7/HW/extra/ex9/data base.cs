@@ -77,12 +77,12 @@ while (atWork)
             currentOccups = GlueArray(tempoOccups);
             currentWagers = GlueArray(tempoWagers);
             break;
-        case "ShowFile#":  
+        case "ShowFile#":
             string[] temporNames = BackToArray(currentNames);
             string[] temporOccups = BackToArray(currentOccups);
             string[] temporWagers = BackToArray(currentWagers);
             int targetN = ReadInt("Введите номер досье: ");
-            ShowFileN (temporNames, temporOccups, temporWagers, targetN);
+            ShowFileN(temporNames, temporOccups, temporWagers, targetN);
             currentNames = GlueArray(temporNames);
             currentOccups = GlueArray(temporOccups);
             currentWagers = GlueArray(temporWagers);
@@ -97,9 +97,32 @@ while (atWork)
             if (belows[0] == -1)
                 Console.WriteLine("Совпадений нет...");
             else
-                ShowBelow(zahlen, besetzung, gehalt, belows);
+                ShowTargets(zahlen, besetzung, gehalt, belows);
+            currentNames = GlueArray(zahlen);
+            currentOccups = GlueArray(besetzung);
+            currentWagers = GlueArray(gehalt);
             break;
-        case "exit":  
+        case "AverageRate":
+            string[] numeros = BackToArray(currentWagers);
+            Console.WriteLine($"Средняя зароботная плата всех {numeros.Length} сотрудников:\n {AverageRate(numeros)}");
+            currentWagers = GlueArray(numeros);
+            break;
+        case "ShowNamesakes":
+            string inputSurname = ReadString("Введите Фамилию: ");
+            string[] isimlar = BackToArray(currentNames);
+            string[] ishlar = BackToArray(currentOccups);
+            string[] pullari = BackToArray(currentWagers);
+            Console.WriteLine($"Однофамильцы {inputSurname}: ");
+            int[] namesakes = FindNamesakes(isimlar, inputSurname);
+            if (namesakes[0] == -1)
+                Console.WriteLine("Совпадений нет...");
+            else
+                ShowTargets(isimlar, ishlar, pullari, namesakes);
+            currentNames = GlueArray(isimlar);
+            currentOccups = GlueArray(ishlar);
+            currentWagers = GlueArray(pullari);
+            break;
+        case "exit":
             atWork = false;
             Console.WriteLine("Всего хорошего...");
             break;
@@ -161,32 +184,60 @@ int CountMarkers(string splitable)
 
 /*------------------------ShowBelow control zone-----start---*/
 
-int[] FindBelow (string[] wagers, int target)
+int[] FindBelow(string[] wagers, int target)
 {
     int counter = 0;
-    int[] result = new int [wagers.Length];
+    int[] result = new int[wagers.Length];
+    int order = 0;
     for (int i = 0; i < wagers.Length; i++)
         if (Convert.ToInt32(wagers[i].Replace(" ", "")) < target)
         {
             counter++;
-            result[i] = i+1;
+            result[order] = i + 1;
+            order++;
         }
     if (counter == 0)
         result[0] = -1;
     return result;
-
 }
 
-void ShowBelow (string[] names, string[] occups, string[] wagers, int[] targets)
+int CountNonZeros(int[] array)
 {
-    for (int i = 0; i < targets.Length; i++)
-        if (targets[i] != 0)
-            ShowFileN(names, occups, wagers, targets[i]);
-        else
-            break;
+    int counter = 0;
+    for (int i = 0; i < array.Length; i++)
+        if (array[i] != 0)
+            counter++;
+    return counter;
+}
+
+void ShowTargets(string[] names, string[] occups, string[] wagers, int[] targets)
+{
+    for (int i = 0; i < CountNonZeros(targets); i++)
+        ShowFileN(names, occups, wagers, targets[i]);
 }
 
 /*------------------------ShowBelow control zone-----end-----*/
+
+/*------------------------FindNamesakes control zone-----start---*/
+
+int[] FindNamesakes(string[] names, string target)
+{
+    int counter = 0;
+    int[] result = new int[names.Length];
+    int order = 0;
+    for (int i = 0; i < names.Length; i++)
+        if (names[i].Substring(names[i].IndexOf(' ') + 1, names[i].Length - names[i].IndexOf(' ')-1) == target)
+        {
+            counter++;
+            result[order] = i + 1;
+            order++;
+        }
+    if (counter == 0)
+        result[0] = -1;
+    return result;
+}
+
+/*------------------------FindNamesakes control zone-----end-----*/
 
 /*__________________односложные методы__________________________*/
 
@@ -238,5 +289,13 @@ void SeeCrew(string[] name, string[] occup, string[] wager)
 
 void ShowFileN(string[] a, string[] b, string[] c, int number)
 {
-    Console.WriteLine($"{number}. {a[number - 1]} - {b[number - 1]} - {c[number - 1]}\n");
+    Console.WriteLine($"{number}. {a[number - 1]} - {b[number - 1]} - {c[number - 1]}");
+}
+
+double AverageRate(string[] wagers)
+{
+    int sum = 0;
+    for (int i = 0; i < wagers.Length; i++)
+        sum += Convert.ToInt32(wagers[i].Replace(" ", ""));
+    return Math.Round(Convert.ToDouble(sum) / wagers.Length, 2);
 }
