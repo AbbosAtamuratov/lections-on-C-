@@ -10,10 +10,10 @@ string[,] commandList = new string[10, 2]
     {"FindByName - ","находит первое досье по фамилии и выводит его на экран."}, //4
     {"ShowBelow - ","показывает всех сотрудников с ЗП ниже введённого пользователем."}, //5
     {"ShowAll - ","показывает все досье с указанной должностью, "
-                                + " введённой пользователем через пробел после имени комнды."}, //6
+                                + " введённым пользователем."}, //6
     {"AverageRate - ","считает среднюю зарплату всех сотрудников"}, //7
     {"ShowFile# - ","показывает досье под определённым номером."}, // 8
-    {"FindNamesakes - ","находит однофамильцев и выводит на экран номера их досье."}, //9
+    {"FindNamesakes - ","находит однофамильцев и выводит на экран их досье."}, //9
     {"exit - ","завершает работу программы."} //10
 };
 
@@ -82,10 +82,15 @@ while (atWork)
             string[] temporOccups = BackToArray(currentOccups);
             string[] temporWagers = BackToArray(currentWagers);
             int targetN = ReadInt("Введите номер досье: ");
-            ShowFileN(temporNames, temporOccups, temporWagers, targetN);
-            currentNames = GlueArray(temporNames);
-            currentOccups = GlueArray(temporOccups);
-            currentWagers = GlueArray(temporWagers);
+            if (targetN - 1 > currentNames.Length)
+                Console.WriteLine("Досье с таким номером нет!");
+            else
+            {
+                ShowFileN(temporNames, temporOccups, temporWagers, targetN);
+                currentNames = GlueArray(temporNames);
+                currentOccups = GlueArray(temporOccups);
+                currentWagers = GlueArray(temporWagers);
+            }
             break;
         case "ShowBelow":
             int inputAmount = ReadInt("Введите сумму: ");
@@ -121,6 +126,23 @@ while (atWork)
             currentNames = GlueArray(isimlar);
             currentOccups = GlueArray(ishlar);
             currentWagers = GlueArray(pullari);
+            break;
+        case "ShowAll":
+            string inputJob = ReadString("Введите должность: ");
+            string[] ileum = BackToArray(currentNames);
+            string[] ilgwa = BackToArray(currentOccups);
+            string[] don = BackToArray(currentWagers);
+            if (!AreThereJobbers(ilgwa, inputJob))
+                Console.WriteLine($"Должности {inputJob} не обнаружено");
+            else
+            {
+                int[] list = ShowAll(ilgwa, inputJob);
+                Console.WriteLine($"Все {inputJob}: ");
+                ShowTargets(ileum, ilgwa, don, list);
+            }
+            currentNames = GlueArray(ileum);
+            currentOccups = GlueArray(ilgwa);
+            currentWagers = GlueArray(don);
             break;
         case "exit":
             atWork = false;
@@ -196,8 +218,6 @@ int[] FindBelow(string[] wagers, int target)
             result[order] = i + 1;
             order++;
         }
-    if (counter == 0)
-        result[0] = -1;
     return result;
 }
 
@@ -218,6 +238,35 @@ void ShowTargets(string[] names, string[] occups, string[] wagers, int[] targets
 
 /*------------------------ShowBelow control zone-----end-----*/
 
+/*------------------------ShowAll control zone---start-----*/
+
+bool AreThereJobbers(string[] jobList, string target)
+{
+    for (int i = 0; i < jobList.Length; i++)
+        if (jobList[i] == target)
+            return true;
+    return false;
+}
+
+int[] ShowAll(string[] jobList, string target)
+{
+    int counter = 0;
+    int[] result = new int[jobList.Length];
+    int order = 0;
+    for (int i = 0; i < jobList.Length; i++)
+        if (jobList[i] == target)
+        {
+            counter++;
+            result[order] = i + 1;
+            order++;
+        }
+    if (counter == 0)
+        result[0] = -1;
+    return result;
+}
+
+/*------------------------ShowAll control zone-----end-----*/
+
 /*------------------------FindNamesakes control zone-----start---*/
 
 int[] FindNamesakes(string[] names, string target)
@@ -226,7 +275,7 @@ int[] FindNamesakes(string[] names, string target)
     int[] result = new int[names.Length];
     int order = 0;
     for (int i = 0; i < names.Length; i++)
-        if (names[i].Substring(names[i].IndexOf(' ') + 1, names[i].Length - names[i].IndexOf(' ')-1) == target)
+        if (names[i].Substring(names[i].IndexOf(' ') + 1, names[i].Length - names[i].IndexOf(' ') - 1) == target)
         {
             counter++;
             result[order] = i + 1;
